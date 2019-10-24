@@ -22,3 +22,13 @@ void MessageDisplayHandler::operator() (const Message& toDisplay) {
 
 	cout << "Body: " << toDisplay.GetBody() << endl;
 }
+
+/* MessageSortingHandler implementations */
+bool MessageSortingHandler::operator() (const Message& lhs, const Message& rhs) {
+	if(sortByHeader) {
+		return lhs.GetHeader() < rhs.GetHeader();
+	} else {
+		return lhs.GetFrom() < rhs.GetFrom();
+	}
+}
+

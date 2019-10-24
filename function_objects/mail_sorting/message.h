@@ -23,3 +23,11 @@ struct MessageDisplayHandler {
 
 	void operator() (const Message& toDisplay);
 };
+
+struct MessageSortingHandler {
+	bool sortByHeader;
+
+	MessageSortingHandler(const bool bSortByHeader = true) { sortByHeader = bSortByHeader; }
+
+	bool operator() (const Message& lhs, const Message& rhs);
+};
