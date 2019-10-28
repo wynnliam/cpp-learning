@@ -8,6 +8,10 @@
 
 	Lambda's are basically ad-hoc locally scoped function objects. As I understand it,
 	they are function objects done with sugar syntax.
+
+	Please, do read the link above. One thing I will not cover here is what
+	happens under the hood. Basically, a lambda becomes a function object
+	at compile time. The client code is updated to use this.
 */
 
 #include <iostream>
@@ -33,6 +37,11 @@ int main() {
 	cout << "Demo 02" << endl;
 	split();
 	demo_02_adhoc_function();
+	split();
+
+	cout << "Demo 03" << endl;
+	split();
+	demo_03_inline_lambda();
 	split();
 
 	return 0;
@@ -86,4 +95,27 @@ void demo_02_adhoc_function() {
 }
 
 void demo_03_inline_lambda() {
+	/*
+		You can take the result from demo 02 to the extreme.
+		In this demo, I scan each point, looking for the one whose
+		x coordinate is 4.
+	*/
+
+	struct example_struct {
+		int x, y;
+	};
+
+	vector<example_struct> points;
+
+	points.push_back({0, 1});
+	points.push_back({2, 3});
+	points.push_back({4, 5});
+	points.push_back({6, 7});
+	points.push_back({8, 9});
+
+	auto i = find_if(points.begin(), points.end(), [](example_struct& e) -> bool { return e.x == 4; });
+
+	if(i != points.end())
+		cout << i->x << ", " << i->y << endl;
+
 }
