@@ -11,19 +11,28 @@
 */
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
 void demo_01_basic_lambda();
+void demo_02_adhoc_function();
+void demo_03_inline_lambda();
 
 void split() {
 	cout << "-----" << endl;
 }
 
 int main() {
-	cout << "First demo" << endl;
+	cout << "Demo 01" << endl;
 	split();
 	demo_01_basic_lambda();
+	split();
+
+	cout << "Demo 02" << endl;
+	split();
+	demo_02_adhoc_function();
 	split();
 
 	return 0;
@@ -50,4 +59,31 @@ void demo_01_basic_lambda() {
 	int p = 10;
 	cout << "Input is " << p << endl;
 	cout << "Resulting lambda application is " << example_lambda(p) << endl;
+}
+
+void demo_02_adhoc_function() {
+	/*
+		Lambdas are a powerful tool! They allow us to create ad-hoc functions
+		in local scope. This was illegal in C++ before. Now we needn't create
+		a functor to print a list of example_structs, as seen here.
+	*/
+
+	struct example_struct {
+		int x, y;
+	};
+
+	auto printer = [](example_struct& e) -> void { cout << e.x << ", " << e.y << endl; };
+
+	vector<example_struct> points;
+
+	points.push_back({0, 1});
+	points.push_back({2, 3});
+	points.push_back({4, 5});
+	points.push_back({6, 7});
+	points.push_back({8, 9});
+
+	for_each(points.begin(), points.end(), printer);
+}
+
+void demo_03_inline_lambda() {
 }
