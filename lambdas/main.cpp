@@ -23,6 +23,7 @@ using namespace std;
 void demo_01_basic_lambda();
 void demo_02_adhoc_function();
 void demo_03_inline_lambda();
+void demo_04_context_capture();
 
 void split() {
 	cout << "-----" << endl;
@@ -42,6 +43,11 @@ int main() {
 	cout << "Demo 03" << endl;
 	split();
 	demo_03_inline_lambda();
+	split();
+
+	cout << "Demo 03" << endl;
+	split();
+	demo_04_context_capture();
 	split();
 
 	return 0;
@@ -118,4 +124,48 @@ void demo_03_inline_lambda() {
 	if(i != points.end())
 		cout << i->x << ", " << i->y << endl;
 
+}
+
+void demo_04_context_capture() {
+	/*
+		What makes function objects so neat? Not only do
+		you overload the function call operator, but you can
+		supply additional parameters via class/struct members.
+
+		This makes it much easier to handle say special cases
+		for printing a list. Do you want to print only certain items?
+		You can do that by specifying members for the function object.
+
+		How about a lambda? In the above scenario, we returned the
+		first point whose x coordinate was 4, but we hard-coded that.
+		It would be nice to be able to parameterize that some how.
+
+		In this demo, we do so with "context-capturing". Context-capturing
+		enables us to access variables outside of the lambda. This isn't
+		just passing an argument. Consider in this demo. We use the
+		for_each algorithm. If we supplied an additional argument, we
+		would not be able to use it in for_each.
+	*/
+
+	int multiplier = 5;
+	vector<int> inputs;
+
+	inputs.push_back(0);
+	inputs.push_back(1);
+	inputs.push_back(2);
+	inputs.push_back(3);
+	inputs.push_back(4);
+
+	auto do_scale  = [multiplier](int& x) -> void { x *= multiplier; };
+	auto print = [](int& x) -> void { cout << x << " "; };
+
+	cout << "Inputs before scaling" << endl;
+	for_each(inputs.begin(), inputs.end(), print);
+	cout << endl;
+
+	for_each(inputs.begin(), inputs.end(), do_scale);
+
+	cout << "Inputs after scaling" << endl;
+	for_each(inputs.begin(), inputs.end(), print);
+	cout << endl;
 }
