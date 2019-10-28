@@ -25,6 +25,7 @@ void demo_02_adhoc_function();
 void demo_03_inline_lambda();
 void demo_04_context_capture();
 void demo_05_context_capture_by_ref();
+void demo_06_default_context_capture();
 
 void split() {
 	cout << "-----" << endl;
@@ -54,6 +55,11 @@ int main() {
 	cout << "Demo 05" << endl;
 	split();
 	demo_05_context_capture_by_ref();
+
+	split();
+	cout << "Demo 06" << endl;
+	split();
+	demo_06_default_context_capture();
 	split();
 
 	return 0;
@@ -213,4 +219,36 @@ void demo_05_context_capture_by_ref() {
 	cout << "Inputs:" << endl;
 	for_each(inputs.begin(), inputs.end(), printer);
 	cout << endl;
+}
+
+void demo_06_default_context_capture() {
+	/*
+		Suppose you had a bunch of things you wanted
+		to capture. You can capture everything with default context
+		capture. Use '=' for default capture by value, or & '&' for
+		default capture by reference.
+
+		Word to the wise: be VERY careful about context capturing!
+		If a variable goes out of scope, you may be able to still reference it.
+		Lambdas are objects, and if you return one that captures an out-of-scope
+		variable, you're gonna have a bad time.
+	*/
+	int x = 3, y = 4, z = 5;
+	float a = 0.12f;
+	double b = 0.34;
+	string c = "567890";
+
+	auto lam1 = [=]() {
+		cout << x << " " << y << " " << z << endl;
+		cout << a << " " << b << " " << c << endl;
+	};
+
+	auto lam2 = [&]() {
+		cout << x << " " << y << " " << z << endl;
+		cout << a << " " << b << " " << c << endl;
+	};
+
+	lam1();
+
+	lam2();
 }
