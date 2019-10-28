@@ -24,6 +24,7 @@ void demo_01_basic_lambda();
 void demo_02_adhoc_function();
 void demo_03_inline_lambda();
 void demo_04_context_capture();
+void demo_05_context_capture_by_ref();
 
 void split() {
 	cout << "-----" << endl;
@@ -45,9 +46,14 @@ int main() {
 	demo_03_inline_lambda();
 	split();
 
-	cout << "Demo 03" << endl;
+	cout << "Demo 04" << endl;
 	split();
 	demo_04_context_capture();
+	split();
+
+	cout << "Demo 05" << endl;
+	split();
+	demo_05_context_capture_by_ref();
 	split();
 
 	return 0;
@@ -167,5 +173,44 @@ void demo_04_context_capture() {
 
 	cout << "Inputs after scaling" << endl;
 	for_each(inputs.begin(), inputs.end(), print);
+	cout << endl;
+}
+
+void demo_05_context_capture_by_ref() {
+	/*
+		In demo 04, we did some context capturing. Note that
+		it captures by value. We can specify that it is by reference.
+		Be careful! We can change the value.
+	*/
+
+
+	int multiplier = 1;
+	vector<int> inputs;
+
+	auto multiply_and_add = [&multiplier](int& x) -> void {
+		x *= multiplier;
+		multiplier += 1;
+	};
+
+	auto printer = [](int& x) -> void {
+		cout << x << " ";
+	};
+
+	inputs.push_back(0);
+	inputs.push_back(1);
+	inputs.push_back(2);
+	inputs.push_back(3);
+
+	cout << "Multiplier value: " << multiplier << endl;
+	cout << "Inputs:" << endl;
+	for_each(inputs.begin(), inputs.end(), printer);
+	cout << endl;
+
+	for_each(inputs.begin(), inputs.end(), multiply_and_add);
+
+	cout << "After multiply and add:" << endl;
+	cout << "Multiplier value: " << multiplier << endl;
+	cout << "Inputs:" << endl;
+	for_each(inputs.begin(), inputs.end(), printer);
 	cout << endl;
 }
