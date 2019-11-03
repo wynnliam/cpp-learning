@@ -12,6 +12,13 @@
 
 	power_struct 0 = 1
 	power_struct n = 2 * power_struct (n - 1)
+
+	There are no mutable variables in template metaprogramming. In this way,
+	it is also highly functional.
+
+	This template metaprogramming can help the compiler write optimizations to code.
+	If you supplied a size parameter via templates, the compiler can do
+	say loop unrolling.
 */
 
 #include <iostream>
