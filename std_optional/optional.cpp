@@ -20,12 +20,14 @@ using namespace std;
 
 void demo_00();
 void demo_01();
+void demo_02();
 
 int main() {
 	cout << "Welcome to the std::optional demo!" << endl;
 
 	demo_00();
 	demo_01();
+	demo_02();
 
 	return 0;
 }
@@ -111,3 +113,24 @@ void demo_01() {
 }
 
 /* --- */
+
+/* DEMO 02 IMPLEMENTATION */
+void demo_02() {
+	cout << "\n--- DEMO 02 --- " << endl;
+	cout << "In this demo, we explore operators with optionals" << endl;
+
+	std::optional<int> empty;
+	std::optional<int> val_a(2);
+	std::optional<int> val_b(10);
+
+	cout << std::boolalpha;
+	cout << (val_b > val_a) << endl;
+	cout << (val_a > val_b) << endl;
+	cout << (empty < val_a) << endl;
+	cout << (empty == std::nullopt) << endl;
+	cout << (val_b == 10) << endl;
+	//cout << (val_a + val_b) << endl; -- Will give an error!
+	cout << (*val_a + *val_b) << endl;
+
+	cout << endl;
+}
