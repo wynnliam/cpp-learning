@@ -19,11 +19,13 @@
 using namespace std;
 
 void demo_00();
+void demo_01();
 
 int main() {
 	cout << "Welcome to the std::optional demo!" << endl;
 
 	demo_00();
+	demo_01();
 
 	return 0;
 }
@@ -66,6 +68,44 @@ void demo_00() {
 
 	print_user(user_id_a, nickname_a);
 	print_user(user_id_b, nickname_b);
+
+	cout << endl;
+}
+
+/* --- */
+
+/* DEMO 01 IMPLEMENTATION */
+class User {
+	public:
+		User(const std::string& newName) : name(newName) {
+			cout << "Constructor Name: " << name << endl;
+		}
+
+		~User() {
+			cout << "Destructor Name: " << name << endl;
+		}
+
+	private:
+		std::string name;
+};
+
+void demo_01() {
+	cout << "\n--- DEMO 01 --- " << endl;
+	cout << "In this demo, we explore assignment and modification of optionals" << endl;
+
+	std::optional<User> currUser;
+
+	currUser.emplace("Steve");
+
+	// Calls ~Steve and calls Mark
+	currUser.emplace("Mark");
+
+	// Resets so its empty
+	currUser.reset();
+	// This is the same as calling ~Mark then assigning it to nullopt
+
+	currUser.emplace("Frank");
+	currUser = User("Jimmy");
 
 	cout << endl;
 }
