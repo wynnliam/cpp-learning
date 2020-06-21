@@ -1,9 +1,9 @@
-// Liam Wynn, 6/20/2020, C++ Learning
+// liam wynn, 6/20/2020, c++ learning
 
 /*
-	A tiny introduction to multithreading in C++
+	a tiny introduction to multithreading in c++
 
-	To compile:
+	to compile:
 	g++ -lpthread 00.cpp
 */
 
